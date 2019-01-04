@@ -13,7 +13,6 @@ import { CreateEventComponent } from './events/create-event/create-event.compone
 import { PageNotFoundComponent } from './errors/page-not-found.component/page-not-found.component';
 import { EventRouteActivatorService } from './events/event-details/event-route-activator.service';
 import { EventListResovlerService } from './events/event-list-resovler.service';
-import { ProfileComponent } from './events/user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +23,6 @@ import { ProfileComponent } from './events/user/profile/profile.component';
     EventDetailsComponent,
     CreateEventComponent,
     PageNotFoundComponent,
-    ProfileComponent,
     //AppRoutingModule
   ],
   imports: [
