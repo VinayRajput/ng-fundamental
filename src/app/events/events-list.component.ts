@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
 import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute } from '@angular/router';
+import { IEvent } from './shared';
 
 //declare let toastr;
 
@@ -12,16 +13,17 @@ import { ActivatedRoute } from '@angular/router';
     <div class="well thumbnail ">
     <div class="row">
       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let event of events">
-      <event-thumbnail [event]="event" (click)="handleClick(event)" (childEvent)="eventFromChild($event)"></event-thumbnail>  
+      <event-thumbnail [event]="event" (click)="handleClick(event)" (childEvent)="eventFromChild($event)"></event-thumbnail>
       </div>
     </div>
     </div>
   `
 })
+
 export class EventsListComponent implements OnInit {
-  events: any;
+  events: IEvent[];
   toastr: any;
-  constructor(public eventService: EventService, public toastrService: ToastrService, public route:ActivatedRoute) {
+  constructor(public eventService: EventService, public toastrService: ToastrService, public route: ActivatedRoute) {
   }
 
   handleClick(ev) {

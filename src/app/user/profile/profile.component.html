@@ -1,11 +1,23 @@
-<h1>Edit your profile</h1>
-<hr>
-
-<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-  <h3>[Edit profile form will go here]</h3>
-  <br/>
-  <br/>
-  <button type="submit" class="btn btn-primary">Save</button>
-  <button type="cancel" class="btn btn-default">Cancel</button>
-
-</div>
+<div>
+    <h1>Edit Your Profile </h1>
+    <hr>
+    <div class="col-md-4">
+      <form autocomplete="off"  [formGroup]="profileForm" novalidate (ngSubmit)="saveProfile(profileForm.value)" *ngIf="!!auth.currentUser">
+        <div class="form-group" [ngClass]="{error: profileForm.controls.firstName.invalid && profileForm.controls.firstName.touched}">
+          <em> <span *ngIf="!validateFirstName() && profileForm.controls.firstName.errors?.required">Required</span>
+          <span *ngIf="!validateFirstName() && profileForm.controls.firstName.errors?.pattern">Must be a valid name</span></em>
+          <label for="firstName">First Name:</label>
+          <input id="firstName"  type="text" formControlName="firstName" class="form-control" placeholder="First Name..." />
+        </div>
+        <div class="form-group" [ngClass]="{error: profileForm.controls.lastName.invalid && profileForm.controls.lastName.touched}">
+          <em> <span *ngIf="!validateLastName() && profileForm.controls.lastName.errors?.required">Required</span>
+          <span *ngIf="!validateLastName() && profileForm.controls.lastName.errors?.pattern">Must be a valid lastname</span></em>
+          <label for="lastName">Last Name:</label>
+          <input id="lastName"  type="text" class="form-control" formControlName="lastName" placeholder="Last Name..." />
+        </div>
+  
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
+      </form>
+    </div>
+  </div>
