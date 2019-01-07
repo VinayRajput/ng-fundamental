@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from './shared/event.service';
+import { EventService } from './event-details/shared/event.service';
 import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-import { IEvent } from './shared';
-
-//declare let toastr;
+import { IEvent } from './event-details/shared';
 
 @Component({
   selector: 'events-list',

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { EventService } from './shared/event.service';
+import { EventService } from './event-details/shared/event.service';
 import { map } from 'rxjs/operators';
-import { IEvent } from './shared';
+import { IEvent } from './event-details/shared';
 import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
