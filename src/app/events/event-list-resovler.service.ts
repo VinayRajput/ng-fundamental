@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class EventListResovlerService implements Resolve<any> {
 
-  resolve():Observable<IEvent[]> {
-    return this.eventService.getEvents().pipe(map(events => events))
+  resolve () {
+    return this.eventService.getEvents();
   }
   constructor(private eventService: EventService) { }
 }

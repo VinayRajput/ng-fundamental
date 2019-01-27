@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config backend-server.proxy.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "server": "node node_modules/ngf-server/server.js",
     "e2e": "ng e2e",
     "generate-barrels": "barrelsby --delete"
   },
@@ -24,6 +25,7 @@
     "angular-cli-tools": "^1.10.2",
     "core-js": "2.5.4",
     "ngf-bootstrap": "0.0.5",
+    "ngf-server": "^1.0.2",
     "rxjs": "6.0.0",
     "toastr": "^2.1.4",
     "zone.js": "0.8.26"

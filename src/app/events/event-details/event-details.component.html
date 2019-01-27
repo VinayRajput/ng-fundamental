@@ -1,17 +1,16 @@
 <div class="container">
   <img [src]="event?.imageUrl" class="event-image" [alt]="event?.name">
-
   <div class="row">
     <div class="col-md-11">
-      <h2>{{event?.name}} </h2>
+      <h2>{{event?.name | titlecase}}  </h2>
     </div>
   </div>
 
   <div class="row">
     <div class="col-md-6">
-      <div><strong>Date:</strong> {{event?.date}}</div>
+      <div><strong>Date:</strong> <span *ngIf="eventService.checkValidDate(event.date)">{{event?.date | date:'dd MMM yyyy'}} </span></div>
       <div><strong>Time:</strong> {{event?.time}}</div>
-      <div><strong>Price:</strong> ${{event?.price}}</div>
+      <div><strong>Price:</strong> {{event?.price | currency:'INR'}}</div>
     </div>
     <div class="col-md-6">
       <address>
@@ -21,4 +20,33 @@
       </address>
     </div>
   </div>
+  <button class="btn btn-default  btn-xs" (click)="editEvent(event)">Edit Event</button>
+  <hr />
+
+  <div class="row" *ngIf="!addMode && !!event?.sessions.length">
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <h3 style="margin:0">Sessions</h3>
+    </div>
+
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+      <a (click)="addSession()" class="a">Add Session</a>
+    </div>
+
+    <div class="filters btn-group btn-group-sm" style="margin:10px 20px;" *ngIf="!addMode">
+
+      <button class="btn btn-default" [ngClass]="{'active': sortBy==='name'}" (click)="sortBy='name'">Name</button>
+      <button class="btn btn-default" [ngClass]="{'active': sortBy==='votes'}" (click)="sortBy='votes'">Voters</button>
+    </div>
+
+    <div class="filters btn-group btn-group-sm" style="margin:10px 0;" *ngIf="!addMode">
+      <button class="btn btn-default" [ngClass]="{'active': filterBy==='all'}" (click)="filterBy='all'">All</button>
+      <button class="btn btn-default" [ngClass]="{'active': filterBy==='intermediate'}" (click)="filterBy='intermediate'">Intermediate</button>
+      <button class="btn btn-default" [ngClass]="{'active': filterBy==='beginner'}" (click)="filterBy='beginner'">Beginner</button>
+      <button class="btn btn-default" [ngClass]="{'active': filterBy==='advance'}" (click)="filterBy='advanced'">Advanced</button>
+    </div>
+
+  </div>
+  <app-session-list [eventId]="event?.id" [filterBy]="filterBy" [sessions]="event.sessions" *ngIf="!addMode && !!event?.sessions.length" [sortBy]="sortBy"></app-session-list>
+  <app-create-session *ngIf="addMode" (saveNewSession)="saveNewSession($event)" (cancelAddSession)="cancelAddSession()"></app-create-session>
 </div>

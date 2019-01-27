@@ -22,5 +22,5 @@ export interface ISession {
   duration: number,
   level: string,
   abstract: string,
-  voters:Array<string>
+  voters: Array<string>
 }

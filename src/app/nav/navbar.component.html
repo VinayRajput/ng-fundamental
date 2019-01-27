@@ -30,14 +30,29 @@
           </li>
         </ul>
       </div>
-      <form id="searchForm"  class="navbar-form navbar-right"  >
+      <form id="searchForm" #searchForm="ngForm" (ngSubmit)="searchSession(searchTerm)" class="navbar-form navbar-right"  >
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search Sessions" >
+          <input [(ngModel)]="searchTerm" name="searchTerm" type="text" class="form-control" placeholder="Search Sessions" >
         </div>
-        <button class="btn btn-default" >
+        <button class="btn btn-default" data-toggle="modal" href='#modal-id'>
           Search
         </button>
       </form>
     </div>
   </div>
 </div>
+<app-simple-modal [title] = "'Search Results'" *ngIf="!!foundSessions">
+      <div *ngIf="foundSessions.length===0 && resultFound===null" class="col-md-12 text-center">
+        <img src="/assets/images/preloader.gif" alt="loading...." />
+      </div>
+      <div *ngIf="!!foundSessions.length">
+            <div class="list-group fadeIn">
+               <a class="list-group-item" *ngFor="let session of foundSessions" [routerLink]="['/events',session.eventId]" data-dismiss="modal">{{session.name}}</a>
+            </div>
+      </div>
+      <div *ngIf="resultFound===false">
+          <h4>No results found for keyword matching : '{{ searchTerm }}'</h4>
+      </div>
+
+</app-simple-modal>
+

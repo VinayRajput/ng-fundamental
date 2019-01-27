@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormControlDirective, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { Toastr, TOKEN_TOASTR } from 'src/app/common/toastr.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,12 +17,13 @@ import { Router } from '@angular/router';
   `]
 })
 export class ProfileComponent implements OnInit {
-  constructor(private auth: AuthService, private router: Router) { }
+  constructor(private auth: AuthService, private router: Router,
+    @Inject(TOKEN_TOASTR) private toastr: Toastr) { }
   private firstName;
   private lastName;
   private profileForm;
 
-  ngOnInit() {
+  ngOnInit () {
     if (!this.auth.currentUser) {
       this.router.navigate(['events']);
       return;
@@ -35,22 +37,33 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  saveProfile(profileFormValues) {
+  saveProfile (profileFormValues) {
     if (this.profileForm.valid) {
-      this.auth.updateProfile(profileFormValues);
-      this.router.navigate(['events']);
+      this.auth.updateProfile(profileFormValues)
+        .subscribe(() => {
+          this.toastr.success('Profile Saved', 'Your Profile is saved succesfully');
+          //        this.router.navigate(['events']);
+        });
     }
   }
 
-  cancel() {
+  logout () {
+    this.auth.logout().subscribe(() => {
+      this.router.navigate(['/user/login']);
+      this.auth.currentUser = undefined;
+      this.toastr.success('You have successfully logged out.', 'Logged out');
+    });
+  }
+
+  cancel () {
     this.router.navigate(['events']);
   }
 
-  validateFirstName() {
+  validateFirstName () {
     return this.firstName.valid || this.firstName.untouched;
   }
 
-  validateLastName() {
+  validateLastName () {
     return this.lastName.valid || this.lastName.untouched;
   }
 }

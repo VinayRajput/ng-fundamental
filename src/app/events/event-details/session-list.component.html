@@ -1,0 +1,22 @@
+<div class="row" *ngFor="let session of visibleSessions">
+      <div class="col-md-1" *ngIf="auth.isAuthenticated()">
+            <app-upvote (vote)="toggleVote(session)" [count]="session.voters.length" [voted]="userHasVoted(session)" ></app-upvote>
+      </div>
+      <div class="col-md-10">
+            <app-collapsible-well>
+                  <div well-title>
+                        <h3>{{session.name}}
+                              <i class="small glyphicon glyphicon-fire" style="color:#ff9900" aria-hidden="true" *ngIf="session.voters.length > 2"></i>
+                        </h3>
+                  </div>
+                  <div well-body class="pointable">
+                        <h6>{{session.presenter}}</h6>
+                        <span>Duration: {{session.duration | duration}}</span><br />
+                        <span>Level: {{session.level}}</span><br/>
+                        <span>Voters: {{session.voters.length}}</span>
+                        <p>{{session.abstract}}</p>
+
+                  </div>
+            </app-collapsible-well>
+      </div>
+</div>

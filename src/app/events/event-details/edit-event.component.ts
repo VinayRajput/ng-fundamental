@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { EventService } from './shared';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EventService, IEvent } from './shared';
 
 @Component({
   selector: 'app-edit-event',
@@ -18,29 +18,20 @@ import { EventService } from './shared';
 export class EditEventComponent implements OnInit {
   isDirty = true;
   event;
-  constructor(private router: Router, private eventService: EventService) { }
+  constructor(private router: Router, private eventService: EventService, private route: ActivatedRoute) { }
 
-  cancel() {
+  cancel () {
     this.router.navigate(['/events']);
   }
 
-  ngOnInit() {
-    this.event = {
-      name: 'Ng Spectactular',
-      date: '8/8/2028',
-      time: '10am',
-      price: 799.99,
-      location: {
-        address: '456 Happy st',
-        city: 'Filicity',
-        country: 'Angularistan'
-      },
-      onlineUrl: 'http://ngSpectactular.com',
-      imageUrl: 'http://ngSpectactular.com/logo.png'
-    };
+  ngOnInit () {
+    const id = this.route.snapshot.params['id'];
+    this.eventService.getEvent(+id).subscribe((event: IEvent) => {
+      this.event = event;
+    });
   }
 
-  saveEvent(formvalues) {
+  saveEvent (formvalues) {
     this.eventService.saveEvent(formvalues);
     this.isDirty = false;
     this.router.navigate(['events']);

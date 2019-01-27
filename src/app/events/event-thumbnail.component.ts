@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EventService } from './event-details';
+
 
 @Component({
   selector: 'event-thumbnail',
@@ -11,27 +13,28 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class EventThumbnailComponent implements OnInit {
   @Input() event: any;
   @Output() childEvent = new EventEmitter();
-  btnClicked() {
+
+  constructor(private eventService: EventService) {
+  }
+
+  ngOnInit () {
+  }
+
+
+  btnClicked () {
     this.childEvent.emit({ name: this.event.name, cost: this.event.price });
   }
 
-  getTimingClasses() {
+  getTimingClasses () {
     let isEarlyStart = (this.event.time == '8:00 am') ? true : false;
     return { green: isEarlyStart, bold: isEarlyStart };
   }
 
-  getStartTimeStyle(): any {
+  getStartTimeStyle (): any {
     let isEarlyStart = (this.event.time == '8:00 am') ? true : false;
     if (isEarlyStart) {
       return { 'color': '#ff0000', 'font-weight': 'bold' };
     }
     return {};
   }
-
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
-
 }

@@ -15,7 +15,14 @@
         required />
       </div>
       <span (mouseenter)="showValidation=true" (mouseleave)="showValidation=false">
- <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button></span>
+        <br/>
+        <div *ngIf="!!loginInvalid" class="alert alert-danger text-red small rounded">
+          <i class="	glyphicon glyphicon-exclamation-sign"></i>
+          Username and Password not valid, plesae try again!
+        </div>
+        <br/>
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">Login</button></span>
  <button type="button" class="btn btn-default" (click)="cancel()">Cancel</button>
     </form>
+
   </div>

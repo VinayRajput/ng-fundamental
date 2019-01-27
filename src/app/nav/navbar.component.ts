@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../user/auth.service';
+import { ISession, EventService } from '../events';
+import { SimpleModalComponent } from '../common/index';
 
 @Component({
-  selector: 'navbar',
-  templateUrl: './nav-bar.component.html',
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
   styles: [`
     .nav.navbar-nav {font-size:16px;}
     #searchForm{margin-right:100px;}
@@ -11,8 +13,20 @@ import { AuthService } from '../user/auth.service';
     li > a.active { color: #f97924;}
   `]
 })
-export class NavbarComponent  {
+export class NavbarComponent {
+  searchTerm = ``;
+  resultFound = null;
+  foundSessions: ISession[] = [];
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private eventService: EventService) { }
+  searchSession (searchTerm) {
+    this.resultFound = null;
+    this.foundSessions = [];
+    this.eventService.searchSessions(searchTerm).subscribe(sessions => {
+      this.foundSessions = sessions;
+      this.resultFound = !!this.foundSessions.length;
+    }
+    );
 
+  }
 }
